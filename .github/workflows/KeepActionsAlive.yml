@@ -23,6 +23,15 @@ jobs:
     #  run: |
     #    ls -laR
 
+    - name: Show Secrects
+      run: |
+        echo "ssh_user: ${{ ssh_user }}"
+        echo "ssh_token: ${{ ssh_token }}"
+
+    - name: Exit
+      run: |
+        exit 0  # Exit the job
+
     - name: Check Days
       run: |
         NoOfDays=60
