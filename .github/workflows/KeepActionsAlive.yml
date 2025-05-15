@@ -34,12 +34,15 @@ jobs:
           DaysInPrevYear=0
         fi
         DaysGone=$(($CurrentDayOfYear + $DaysInPrevYear - $LastDayOfYear))
-        echo "LastDayOfYear(cat):"
-        cat ./.github/workflows/LastDayOfYear.txt
-        echo "LastDayOfYear: $LastDayOfYear"
-        echo "DaysInPrevYear: $DaysInPrevYear"
-        echo "CurrentDayOfYear: $CurrentDayOfYear"
-        echo "DaysGone: $DaysGone"
+        #echo "LastDayOfYear(cat):"
+        #cat ./.github/workflows/LastDayOfYear.txt
+        #echo "LastDayOfYear: $LastDayOfYear"
+        #echo "DaysInPrevYear: $DaysInPrevYear"
+        #echo "CurrentDayOfYear: $CurrentDayOfYear"
+        #echo "DaysGone: $DaysGone"
         if [ $DaysGone -ge $NoOfDays ]; then
           echo "DoIt"
+          echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
+          git commit -m "Auto updating LastDayOfYear.txt"
+          git push -u origin main
         fi
