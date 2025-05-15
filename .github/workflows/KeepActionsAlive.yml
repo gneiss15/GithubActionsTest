@@ -26,4 +26,4 @@ jobs:
         echo "ssh_token: ${{ secrets.ssh_token }}"
         git config --global github.user=${{ secrets.ssh_user }}
         git config --global github.token=${{ secrets.ssh_token }}
-        git remote set-url origin git@github.com:gneiss15/GithubActionsTest.git
+        git remote set-url origin "git@github.com:gneiss15/GithubActionsTest.git"
