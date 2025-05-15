@@ -37,7 +37,7 @@ jobs:
           git config --global user.name "Günter Neiß"
           # switching from HTTPS to SSH
           git remote set-url origin ${{ secrets.ssh }}
-          git remote set-url origin ${{ secrets.ssh }}
+          git all --all
           git commit -m "Auto updating LastDayOfYear.txt"
           git push -u origin main
         fi
