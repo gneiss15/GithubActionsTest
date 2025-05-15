@@ -33,6 +33,8 @@ jobs:
         if [ $DaysGone -ge $NoOfDays ]; then
           echo "DoIt"
           echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
+          git config --global user.email "gneiss@web.de"
+          git config --global user.name "Günter Neiß"
           # switching from HTTPS to SSH
           git remote set-url origin ${{ secrets.ssh }}
           git remote set-url origin ${{ secrets.ssh }}
