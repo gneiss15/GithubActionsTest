@@ -34,7 +34,10 @@ jobs:
           DaysInPrevYear=0
         fi
         DaysGone=$(($CurrentDayOfYear + $DaysInPrevYear - $LastDayOfYear))
-        echo $DaysGone
+        echo "LastDayOfYear: $LastDayOfYear"
+        echo "DaysInPrevYear: $DaysInPrevYear"
+        echo "CurrentDayOfYear: $CurrentDayOfYear"
+        echo "DaysGone: $DaysGone"
         if [ $DaysGone -ge $NoOfDays ]; then
           echo "DoIt"
         fi
