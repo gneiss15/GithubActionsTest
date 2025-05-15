@@ -33,6 +33,9 @@ jobs:
         TAG=$(($TAG + 1))
         echo "TAG now: $TAG"
         echo "TAG=$TAG" >> $GITHUB_ENV
+        if [ ! -d ./Test-Tag ]; then
+          mkdir ./Test-Tag
+        fi
         echo "$TAG" > ./Test-Tag/MyTest.txt
 
     - name: Upload tag
