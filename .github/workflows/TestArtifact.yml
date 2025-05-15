@@ -11,11 +11,17 @@ jobs:
     timeout-minutes: 180
     steps:
 
+    - name: Create Tag Dir
+      run: |
+        if [ ! -d ./MyTest-Tag ]; then
+          mkdir ./MyTest-Tag
+        fi
+
     - name: Download tag
       uses: actions/download-artifact@v4
       with:
         name: MyTest-Tag
-        path: ./MyTest-Tag
+        path: ./MyTest-Tag/MyTag.txt
       continue-on-error: true
 
     - name: Set tag
@@ -23,8 +29,8 @@ jobs:
       run: |
         ls -la
         TAG=0
-        if [ -f ./MyTest-Tag/MyTest.txt ]; then
-          TAG=$(cat ./MyTest-Tag/MyTest.txt)
+        if [ -f ./MyTest-Tag/MyTag.txt ]; then
+          TAG=$(cat ./MyTest-Tag/MyTag.txt)
           echo "TAG read: $TAG"
         else
           echo "TAG not found"
@@ -33,13 +39,10 @@ jobs:
         TAG=$(($TAG + 1))
         echo "TAG now: $TAG"
         echo "TAG=$TAG" >> $GITHUB_ENV
-        if [ ! -d ./MyTest-Tag ]; then
-          mkdir ./MyTest-Tag
-        fi
-        echo "$TAG" > ./MyTest-Tag/MyTest.txt
+        echo "$TAG" > ./MyTest-Tag/MyTag.txt
 
     - name: Upload tag
       uses: actions/upload-artifact@v4
       with:
         name: MyTest-Tag
-        path: ./MyTest-Tag
+        path: ./MyTest-Tag/MyTag.txt
