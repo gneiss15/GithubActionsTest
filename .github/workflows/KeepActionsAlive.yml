@@ -24,4 +24,10 @@ jobs:
         echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
         echo "ssh_user: ${{ secrets.SSH_USER }}"
         echo "ssh_token: ${{ secrets.ssh_token }}"
+        a="${{ secrets.GITHUB_TOKEN }}"
+        b="${{ secrets.SSH_USER }}"
+        c="${{ secrets.ssh_token }}"
+        echo "GITHUB_TOKEN: $a"
+        echo "ssh_user: $b"
+        echo "ssh_token: $c"
 
