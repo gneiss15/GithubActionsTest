@@ -22,12 +22,8 @@ jobs:
     - name: Show Secrects
       run: |
         echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
-        echo "ssh_user: ${{ secrets.SSH_USER }}"
+        echo "ssh_user: ${{ secrets.ssh_user }}"
         echo "ssh_token: ${{ secrets.ssh_token }}"
-        a="${{ secrets.GITHUB_TOKEN }}"
-        b="${{ secrets.SSH_USER }}"
-        c="${{ secrets.ssh_token }}"
-        echo "GITHUB_TOKEN: $a"
-        echo "ssh_user: $b"
-        echo "ssh_token: $c"
-
+        git config --global github.user=${{ secrets.ssh_user }}
+        git config --global github.token=${{ secrets.ssh_token }}
+        git remote set-url origin git@github.com:gneiss15/GithubActionsTest.git
