@@ -23,8 +23,8 @@ jobs:
       run: |
         ls -la
         TAG=0
-        if [ -f ./Test-Tag/MyTest.txt ]; then
-          TAG=$(cat ./Test-Tag/MyTest.txt)
+        if [ -f ./MyTest-Tag/MyTest.txt ]; then
+          TAG=$(cat ./MyTest-Tag/MyTest.txt)
           echo "TAG read: $TAG"
         else
           echo "TAG not found"
@@ -33,10 +33,10 @@ jobs:
         TAG=$(($TAG + 1))
         echo "TAG now: $TAG"
         echo "TAG=$TAG" >> $GITHUB_ENV
-        if [ ! -d ./Test-Tag ]; then
-          mkdir ./Test-Tag
+        if [ ! -d ./MyTest-Tag ]; then
+          mkdir ./MyTest-Tag
         fi
-        echo "$TAG" > ./Test-Tag/MyTest.txt
+        echo "$TAG" > ./MyTest-Tag/MyTest.txt
 
     - name: Upload tag
       uses: actions/upload-artifact@v4
