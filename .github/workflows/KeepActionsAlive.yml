@@ -25,9 +25,9 @@ jobs:
 
     - name: Show Secrects
       run: |
-        echo "GITHUB_TOKEN: ${{ GITHUB_TOKEN }}"
-        echo "ssh_user: ${{ SSH_USER }}"
-        echo "ssh_token: ${{ ssh_token }}"
+        echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
+        #echo "ssh_user: ${{ SSH_USER }}"
+        #echo "ssh_token: ${{ ssh_token }}"
 
     - name: Exit
       run: |
