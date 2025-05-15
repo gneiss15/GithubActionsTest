@@ -26,7 +26,7 @@ jobs:
     - name: Check Days
       run: |
         NoOfDays=60
-        LastDayOfYear=$(cat ./LastDayOfYear.txt)
+        LastDayOfYear=$(cat ./.github/workflows/LastDayOfYear.txt)
         CurrentDayOfYear=$(date +"%j")
         if [ $CurrentDayOfYear -le $LastDayOfYear ]; then
           DaysInPrevYear=$(date -d "$(($(date +"%Y")-1))-12-31" +"%j")
