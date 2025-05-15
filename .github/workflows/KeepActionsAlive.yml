@@ -7,6 +7,9 @@ on:
   schedule:
     - cron: '0 0 * * *' # Every Day at 00:00 CET
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   linux:
     runs-on: ubuntu-24.04
