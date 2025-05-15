@@ -43,6 +43,8 @@ jobs:
         if [ $DaysGone -ge $NoOfDays ]; then
           echo "DoIt"
           echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
+          # switching from HTTPS to SSH
+          git remote set-url origin ${{ secrets.ssh }}
           git commit -m "Auto updating LastDayOfYear.txt"
           git push -u origin main
         fi
