@@ -23,7 +23,7 @@ jobs:
       with:
         email: '${{ secrets.user_email }}'
         name: '${{ secrets.user_name }}'
-        token: '${{ secrets.user_github_token }}'
+        token: '${{ secrets.WORKFLOW_TOKEN }}'
         global: true
         
     - name: Check Days
