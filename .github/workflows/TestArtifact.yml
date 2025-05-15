@@ -21,6 +21,7 @@ jobs:
     - name: Set tag
       id: set_tag
       run: |
+        ls -la
         TAG=0
         if [ -f ./Test-Tag/MyTest.txt ]; then
           TAG=$(cat ./Test-Tag/MyTest.txt)
