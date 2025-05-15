@@ -19,21 +19,23 @@ jobs:
     - name: Clone the repository
       uses: actions/checkout@v4
 
-    - name: Show Repo
-      run: |
-        ls -laR
+    #- name: Show Repo
+    #  run: |
+    #    ls -laR
 
     - name: Check Days
       run: |
         NoOfDays=60
         LastDayOfYear=$(cat ./.github/workflows/LastDayOfYear.txt)
         CurrentDayOfYear=$(date +"%j")
-        if [ $CurrentDayOfYear -le $LastDayOfYear ]; then
+        if [ $CurrentDayOfYear -lt $LastDayOfYear ]; then
           DaysInPrevYear=$(date -d "$(($(date +"%Y")-1))-12-31" +"%j")
          else
           DaysInPrevYear=0
         fi
         DaysGone=$(($CurrentDayOfYear + $DaysInPrevYear - $LastDayOfYear))
+        echo "LastDayOfYear(cat):"
+        cat ./.github/workflows/LastDayOfYear.txt
         echo "LastDayOfYear: $LastDayOfYear"
         echo "DaysInPrevYear: $DaysInPrevYear"
         echo "CurrentDayOfYear: $CurrentDayOfYear"
