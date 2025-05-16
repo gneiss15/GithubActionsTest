@@ -26,7 +26,7 @@ jobs:
 
     - name: Check Days
       run: |
-        NoOfDays=60
+        NoOfDays=45
         TagFile="./.github/workflows/LastDayOfYear"
         if [ -f $TagFile ]; then
           LastDayOfYear=$(cat $TagFile)
@@ -40,11 +40,15 @@ jobs:
           DaysInPrevYear=0
         fi
         DaysGone=$(($CurrentDayOfYear + $DaysInPrevYear - $LastDayOfYear))
+        echo "LastDayOfYear: $LastDayOfYear"
+        echo "CurrentDayOfYear: $CurrentDayOfYear"
+        echo "DaysGone: $DaysGone"
+        echo "NoOfDays: $NoOfDays"
         if [ $DaysGone -lt $NoOfDays ]; then
-          echo "DaysGone ($DaysGone) -lt NoOfDays ($NoOfDays)"
-          exit 0;
+          echo "No Commit nessesary"
+          exit 0
         fi
-        echo "DaysGone: $DaysGone, CurrentDayOfYear: $CurrentDayOfYear"
+        echo "Commit nessesary -> Update TagFile"
         echo "$CurrentDayOfYear" >$TagFile
 
     - name: Commit all changed files back to the repository
