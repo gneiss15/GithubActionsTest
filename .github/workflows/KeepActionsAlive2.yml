@@ -1,0 +1,49 @@
+# Do a commit every "n" Days to keep actions alive
+# Adjust "n" by changing "NoOfDays" inside "Check Days"
+name: KeepActionsAlive2
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Every Day at 00:00 CET
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+    - name: Clone the repository
+      uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+    - name: Check Days
+      run: |
+        NoOfDays=60
+        LastDayOfYear=$(cat ./.github/workflows/LastDayOfYear.txt)
+        CurrentDayOfYear=$(date +"%j")
+        if [ $CurrentDayOfYear -lt $LastDayOfYear ]; then
+          DaysInPrevYear=$(date -d "$(($(date +"%Y")-1))-12-31" +"%j")
+         else
+          DaysInPrevYear=0
+        fi
+        DaysGone=$(($CurrentDayOfYear + $DaysInPrevYear - $LastDayOfYear))
+        if [ $DaysGone -ge $NoOfDays ]; then
+          echo "DoIt 1"
+          echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
+          echo "DoIt 2"
+          git add --all
+          echo "DoIt 9"
+          git commit -m "Auto updating LastDayOfYear.txt"
+          echo "DoIt 10"
+          git push -u origin main
+          echo "DoIt 11"
+        fi
+
+    - name: Commit all changed files back to the repository
+      uses: stefanzweifel/git-auto-commit-action@v5
