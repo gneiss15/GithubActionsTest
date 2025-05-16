@@ -14,6 +14,9 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         token: '${{ secrets.PAT }}'
+    - name: Show repository
+      run: |
+        ls -laR
 
   workflow-keepalive:
     #if: github.event_name == 'schedule'
