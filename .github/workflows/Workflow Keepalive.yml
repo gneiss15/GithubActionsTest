@@ -6,15 +6,6 @@ on:
     - cron: '0 0 * * *' # Every Day at 00:00 CET
 
 jobs:
-  normal-job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Clone the repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
-        token: '${{ secrets.PAT }}'
-
   workflow-keepalive:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
