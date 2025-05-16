@@ -6,9 +6,6 @@ on:
     - cron: '0 0 * * *' # Every Day at 00:00 CET
 
 jobs:
-  linux:
-    runs-on: ubuntu-latest
-
   workflow-keepalive:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
