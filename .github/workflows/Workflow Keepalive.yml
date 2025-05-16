@@ -14,12 +14,6 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         token: '${{ secrets.PAT }}'
-    - name: Show repository
-      run: |
-        #ls -laR
-        for i in "./.github/workflows/*.y*ml"; do
-          echo $i
-        done
 
   workflow-keepalive:
     #if: github.event_name == 'schedule'
@@ -53,8 +47,8 @@ jobs:
         echo "workflow:"
         echo "  ${workflow}"
 
-        for i in "./.github/workflows/*.y*ml"; do
+        for i in ".github/workflows/*.y*ml"; do
           echo $i
         done
-
+        #./.github/workflows/KeepActionsAlive.yml ./.github/workflows/TestArtifact.yml ./.github/workflows/Workflow Keepalive.yml
         #gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
