@@ -1,0 +1,20 @@
+name: Workflow Keepalive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Every Day at 00:00 CET
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+
+  workflow-keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+    - name: Reenable Workflow
+      run: |
+        gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/Workflow Keepalive/enable"
