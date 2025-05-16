@@ -6,51 +6,19 @@ on:
     - cron: '0 0 * * *' # Every Day at 00:00 CET
 
 jobs:
-  normal-job:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Clone the repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
-        token: '${{ secrets.PAT }}'
-
   workflow-keepalive:
     #if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     permissions:
       actions: write
     steps:
-    - name: Clone the repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
-        token: '${{ secrets.PAT }}'
     - name: Reenable Workflow
       env:
         GH_TOKEN: ${{ github.token }}
       shell: bash
       run: |
-        echo "GITHUB_WORKFLOW_REF:"
-        echo "  ${GITHUB_WORKFLOW_REF}"
-        echo "  ${GITHUB_WORKFLOW_REF:?}"
-        echo "GITHUB_REPOSITORY:"
-        echo "  ${GITHUB_REPOSITORY}"
-        echo "  ${GITHUB_REPOSITORY:?}"
-
-        case "${GITHUB_WORKFLOW_REF:?}" in
-          "${GITHUB_REPOSITORY:?}"/.github/workflows/*.y*ml@*) ;;
-          *) false ;;
-        esac
-        workflow="${GITHUB_WORKFLOW_REF%%@*}"
-        workflow="${workflow#${GITHUB_REPOSITORY}/.github/workflows/}"
-        echo "workflow:"
-        echo "  ${workflow}"
-
         for i in .github/workflows/*.y*ml; do
           workflow="${i#.github/workflows/}"
           echo "$workflow"
           gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
         done
-        #.github/workflows/KeepActionsAlive.yml .github/workflows/TestArtifact.yml .github/workflows/Workflow Keepalive.yml
-        #gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
