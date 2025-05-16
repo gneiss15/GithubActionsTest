@@ -16,7 +16,10 @@ jobs:
         token: '${{ secrets.PAT }}'
     - name: Show repository
       run: |
-        ls -laR
+        #ls -laR
+        for i in "./.github/workflows/*.y*ml"; do
+          echo $i
+        done
 
   workflow-keepalive:
     #if: github.event_name == 'schedule'
@@ -27,6 +30,7 @@ jobs:
     - name: Reenable Workflow
       env:
         GH_TOKEN: ${{ github.token }}
+      shell: bash
       run: |
         echo "GITHUB_WORKFLOW_REF:"
         echo "  ${GITHUB_WORKFLOW_REF}"
