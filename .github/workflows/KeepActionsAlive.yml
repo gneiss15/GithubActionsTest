@@ -21,8 +21,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-        token: '${{ secrets.USER_GITHUB_TOKEN }}'
-        ssh-key: '${{ secrets.ssh_key }}'
+        token: '${{ secrets.PAT }}'
 
     - name: Check Days
       run: |
