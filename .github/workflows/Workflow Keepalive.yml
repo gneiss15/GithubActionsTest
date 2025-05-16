@@ -32,4 +32,8 @@ jobs:
         echo "workflow:"
         echo "  ${workflow}"
 
-        gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
+        for i in "./.github/workflows/*.y*ml); do
+          echo $8
+        done
+
+        #gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
