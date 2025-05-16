@@ -16,11 +16,16 @@ jobs:
         token: '${{ secrets.PAT }}'
 
   workflow-keepalive:
-    #if: github.event_name == 'schedule'
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     permissions:
       actions: write
     steps:
+    - name: Clone the repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+        token: '${{ secrets.PAT }}'
     - name: Reenable Workflow
       env:
         GH_TOKEN: ${{ github.token }}
@@ -28,6 +33,6 @@ jobs:
       run: |
         for i in .github/workflows/*.y*ml; do
           workflow="${i#.github/workflows/}"
-          echo "$workflow"
+          #echo "$workflow"
           gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
         done
