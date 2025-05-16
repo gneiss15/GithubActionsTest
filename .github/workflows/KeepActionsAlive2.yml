@@ -11,10 +11,10 @@ jobs:
   linux:
     runs-on: ubuntu-latest
 
-    permissions:
+    #permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
-      contents: write
+    #  contents: write
 
     steps:
     - name: Clone the repository
@@ -37,8 +37,10 @@ jobs:
         fi
         DaysGone=$(($CurrentDayOfYear + $DaysInPrevYear - $LastDayOfYear))
         if [ $DaysGone -lt $NoOfDays ]; then
+          echo "DaysGone ($DaysGone) -lt NoOfDays ($NoOfDays)"
           exit 0;
         fi
+        echo "DaysGone: $DaysGone, CurrentDayOfYear: $CurrentDayOfYear"
         echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
 
     - name: Commit all changed files back to the repository
