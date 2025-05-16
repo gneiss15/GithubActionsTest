@@ -48,7 +48,8 @@ jobs:
         echo "  ${workflow}"
 
         for i in ".github/workflows/*.y*ml"; do
-          echo $i
+          echo "$i"
+          gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${i}/enable"
         done
-        #./.github/workflows/KeepActionsAlive.yml ./.github/workflows/TestArtifact.yml ./.github/workflows/Workflow Keepalive.yml
+        #.github/workflows/KeepActionsAlive.yml .github/workflows/TestArtifact.yml .github/workflows/Workflow Keepalive.yml
         #gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
