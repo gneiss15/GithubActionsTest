@@ -23,4 +23,13 @@ jobs:
         echo "  ${GITHUB_REPOSITORY}"
         echo "  ${GITHUB_REPOSITORY:?}"
 
-        #gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/Workflow Keepalive/enable"
+        case "${GITHUB_WORKFLOW_REF:?}" in
+          "${GITHUB_REPOSITORY:?}"/.github/workflows/*.y*ml@*) ;;
+          *) false ;;
+        esac
+        workflow="${GITHUB_WORKFLOW_REF%%@*}"
+        workflow="${workflow#${GITHUB_REPOSITORY}/.github/workflows/}"
+        echo "workflow:"
+        echo "  ${workflow}"
+
+        gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
