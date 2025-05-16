@@ -21,6 +21,9 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
+        email: '${{ secrets.user_email }}'
+        name: '${{ secrets.user_name }}'
+        token: '${{ secrets.USER_GITHUB_TOKEN }}'
 
     - name: Check Days
       run: |
@@ -103,4 +106,4 @@ jobs:
 
         # Optional. Creates a new tag and pushes it to remote without creating a commit. 
         # Skips dirty check and changed files. Must be used with `tagging_message`.
-        #create_git_tag_only: false			
+        #create_git_tag_only: false
