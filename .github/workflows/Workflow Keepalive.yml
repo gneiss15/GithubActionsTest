@@ -1,4 +1,4 @@
-name: Workflow Keepalive
+name: Keep all workflows of repository alive
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   workflow-keepalive:
-    if: github.event_name == 'schedule'
+    #if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -24,6 +24,6 @@ jobs:
       run: |
         for i in .github/workflows/*.y*ml; do
           workflow="${i#.github/workflows/}"
-          #echo "$workflow"
+          echo "Enable: $workflow"
           gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/enable"
         done
