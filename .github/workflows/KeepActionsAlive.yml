@@ -4,8 +4,8 @@ name: KeepActionsAlive
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *' # Every Day at 00:00 CET
+  #schedule:
+  #  - cron: '0 0 * * *' # Every Day at 00:00 CET
 
 jobs:
   linux:
