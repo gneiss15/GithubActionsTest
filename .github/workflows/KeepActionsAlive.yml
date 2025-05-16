@@ -22,7 +22,7 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         token: '${{ secrets.USER_GITHUB_TOKEN }}'
-        #ssh-key: '${{ secrets.ssh_key }}'
+        ssh-key: '${{ secrets.ssh_key }}'
 
     - name: Check Days
       run: |
