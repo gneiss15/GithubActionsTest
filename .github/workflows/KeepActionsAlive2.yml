@@ -37,7 +37,8 @@ jobs:
 				  echo "DaysGone ($DaysGone) < NoOfDays ($NoOfDays)"
 					exit 0
 				fi
-        echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
+       echo "$CurrentDayOfYear" >./.github/workflows/LastDayOfYear.txt
+
 
     - name: Commit all changed files back to the repository
       uses: stefanzweifel/git-auto-commit-action@v5
