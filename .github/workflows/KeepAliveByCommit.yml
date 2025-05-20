@@ -27,6 +27,6 @@ jobs:
         NoOfDays=45
         #workflow="${GITHUB_WORKFLOW_REF%%@*}"
         #workflow="${workflow#${GITHUB_REPOSITORY}/.github/workflows/}"
-        YmlFile=./.github/workflows/${GITHUB_WORKFLOW_REF%%@*}"
+        YmlFile="./.github/workflows/${GITHUB_WORKFLOW_REF%%@*}"
         nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
 
