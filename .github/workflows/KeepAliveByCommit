@@ -1,0 +1,35 @@
+# Do a commit every "n" Days to keep actions alive
+# Adjust "n" by changing "NoOfDays" inside "Check Days"
+name: KeepActionsAlive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Every Day at 00:00 CET
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone the repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+        token: '${{ secrets.PAT }}'
+
+    - name: Check Days
+      run: |
+        set -x
+        set -v
+
+        NoOfDays=45
+        #workflow="${GITHUB_WORKFLOW_REF%%@*}"
+        #workflow="${workflow#${GITHUB_REPOSITORY}/.github/workflows/}"
+        YmlFile=./.github/workflows/${GITHUB_WORKFLOW_REF%%@*}"
+        nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
+        #sed -ie "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $YmlFile
+
+    #- name: Commit all changed files back to the repository
+    #  uses: stefanzweifel/git-auto-commit-action@v5
+
