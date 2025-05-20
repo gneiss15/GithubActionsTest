@@ -15,7 +15,7 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         token: '${{ secrets.PAT }}'
-    - name: Check Days
+    - name: Update cron schedule
       run: |
         Days=45
         #set -x on
