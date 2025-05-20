@@ -3,7 +3,7 @@
 name: KeepActionsAliveByCommit
 on:
   workflow_dispatch:
-
+  push: # Removed by workflow on first run
   schedule:
     - cron: '0 0 04 07 *'
 jobs:
