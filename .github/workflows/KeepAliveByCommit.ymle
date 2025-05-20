@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    - cron: '0 0 * * *' # Modified by workflow on on every run
+    - cron: '0 0 04 07 *' # Modified by workflow on on every run
 jobs:
   workflow-keepalive:
     runs-on: ubuntu-latest
