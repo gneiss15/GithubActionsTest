@@ -26,9 +26,9 @@ jobs:
 
         NoOfDays=45
         YmlFile="./${GITHUB_WORKFLOW_REF%%@*}"
-        date +"%d %m"
-        date -d "now" +"%d %m"
-        date -d "now + 1 Days" +"%d %m"
-        date -d "now + 45 Days" +"%d %m"
         nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
+        sed -e "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $YmlFile
+
+    #- name: Commit all changed files back to the repository
+    #  uses: stefanzweifel/git-auto-commit-action@v5
 
