@@ -24,10 +24,18 @@ jobs:
         set -x
         set -v
 
+        echo "GITHUB_WORKFLOW_REF: ${GITHUB_WORKFLOW_REF}"
+        echo "GITHUB_WORKFLOW_REF:?: ${GITHUB_WORKFLOW_REF:?}"
+        echo "GITHUB_WORKFLOW_REF%%@*: ${GITHUB_WORKFLOW_REF%%@*}"
+        echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+
+        workflow="${GITHUB_WORKFLOW_REF%%@*}"
+        workflow="${workflow#${GITHUB_REPOSITORY}/.github/workflows/}"
+
         NoOfDays=45
         YmlFile="./${GITHUB_WORKFLOW_REF%%@*}"
         nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
-        sed -e "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $YmlFile
+        #sed -e "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $YmlFile
 
     #- name: Commit all changed files back to the repository
     #  uses: stefanzweifel/git-auto-commit-action@v5
