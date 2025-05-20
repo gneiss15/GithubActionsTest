@@ -1,11 +1,11 @@
 # Do a commit every "n" Days to keep actions alive
-# Adjust "n" by changing "NoOfDays" inside "Check Days"
+# Adjust "n" by changing "Days" inside "Check Days"
 name: KeepActionsAliveByCommit
 on:
   workflow_dispatch:
-
+  push: # Removed by workflow on first run
   schedule:
-    - cron: '0 0 04 07 *'
+    - cron: '0 0 * * *' # Modified by workflow on on every run
 jobs:
   workflow-keepalive:
     runs-on: ubuntu-latest
@@ -17,14 +17,15 @@ jobs:
         token: '${{ secrets.PAT }}'
     - name: Check Days
       run: |
+        Days=45
         #set -x on
         #set -v
         workflow="${GITHUB_WORKFLOW_REF%%@*}"
         workflow=".${workflow#${GITHUB_REPOSITORY}}"
-        NoOfDays=45
-        nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
-        sed -ie "s/    - cron: '0 0 04 07 *'
-        sed -ie "s/.*# Removed by workflow on first run$//" $workflow
+        nextDayMonth=$(date -d "now + $Days Days" +"%d %m")
+        SStr="s/^    - cron: .* # Modified by workflow on on every run/    - cron: '0 0 $nextDayMonth *' # Modified by workflow on on every run/"
+        RStr="/.*# Removed by workflow on first run.*/d"
+        sed -ie "$SStr" -e "$RStr" $workflow
     - name: Commit all changed files back to the repository
       uses: stefanzweifel/git-auto-commit-action@v5
 
