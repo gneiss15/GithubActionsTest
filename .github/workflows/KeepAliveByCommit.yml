@@ -29,7 +29,7 @@ jobs:
 
         NoOfDays=45
         nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
-        #sed -e "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $workflow
+        sed -e "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $workflow
 
     #- name: Commit all changed files back to the repository
     #  uses: stefanzweifel/git-auto-commit-action@v5
