@@ -29,8 +29,4 @@ jobs:
         #workflow="${workflow#${GITHUB_REPOSITORY}/.github/workflows/}"
         YmlFile=./.github/workflows/${GITHUB_WORKFLOW_REF%%@*}"
         nextDayMonth=$(date -d "now + $NoOfDays Days" +"%d %m")
-        #sed -ie "s/    - cron: .*/    - cron: '0 0 $nextDayMonth *'/" $YmlFile
-
-    #- name: Commit all changed files back to the repository
-    #  uses: stefanzweifel/git-auto-commit-action@v5
 
