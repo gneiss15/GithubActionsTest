@@ -3,6 +3,7 @@
 name: KeepActionsAliveByCommit
 on:
   workflow_dispatch:
+  push:
   schedule:
     - cron: '0 0 * * *' # Modified by workflow on on every run
 jobs:
