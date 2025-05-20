@@ -4,7 +4,7 @@ name: KeepActionsAliveByCommit
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 04 07 *' # Modified by workflow on on every run
+    - cron: '0 0 * * *' # Modified by workflow on on every run
 jobs:
   workflow-keepalive:
     runs-on: ubuntu-latest
@@ -22,8 +22,7 @@ jobs:
         workflow="${GITHUB_WORKFLOW_REF%%@*}"
         workflow=".${workflow#${GITHUB_REPOSITORY}}"
         nextDayMonth=$(date -d "now + $Days Days" +"%d %m")
-        SStr="s/^    - cron: .* # Modified by workflow on on every run/    - cron: '0 0 $nextDayMonth *' # Modified by workflow on on every run/"
-        sed -i -e "$SStr" -e "$RStr" $workflow
+        sed -ie "s/^    - cron: .* # Modified by workflow on on every run/    - cron: '0 0 $nextDayMonth *' # Modified by workflow on on every run/" $workflow
     - name: Commit all changed files back to the repository
       uses: stefanzweifel/git-auto-commit-action@v5
 
