@@ -1,6 +1,6 @@
 # Do a commit every "n" Days to keep actions alive
 # Adjust "n" by changing "NoOfDays" inside "Check Days"
-name: KeepActionsAlive
+name: KeepActionsAliveByCommit
 
 on:
   workflow_dispatch:
