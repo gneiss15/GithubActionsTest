@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *' # Every Day at 00:00 CET
 
 jobs:
-  linux:
+  workflow-keepalive:
     runs-on: ubuntu-latest
 
     steps:
