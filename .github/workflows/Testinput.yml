@@ -13,5 +13,8 @@ jobs:
     steps:
       - run: |
           echo "var1: $VAR1"
-
- 
+      #Viewing all properties of an event|
+      - env:
+          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run: |
+          echo $EVENT_CONTEXT
