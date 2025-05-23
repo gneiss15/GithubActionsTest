@@ -1,0 +1,15 @@
+name: Test
+on:
+  workflow_dispatch:
+    inputs:
+      var1:
+        required: true
+        type: String
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "var1: $var1"
+
+ 
