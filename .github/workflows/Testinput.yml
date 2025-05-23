@@ -8,8 +8,10 @@ on:
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
+    env:
+      VAR1: ${{ inputs.var1 }}
     steps:
       - run: |
-          echo "var1: $var1"
+          echo "var1: $VAR1"
 
  
