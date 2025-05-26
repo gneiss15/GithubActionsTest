@@ -24,10 +24,10 @@ jobs:
         set -x
         #set -v
         echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
-        mkdir -p ./cache/var/cache/apt/archives/
-        ls -la /var/cache/apt/
-        sudo mv /var/cache/apt/archives/ ./cache/var/cache/apt/archives/
+        mkdir -p $PWD/cache/var/cache/apt/
+        sudo mv /var/cache/apt/archives/ $PWD
         sudo ln -s $PWD/cache/var/cache/apt/archives/ /var/cache/apt/archives
+        ls -la /var/cache/apt/
         sudo apt clean
         ls -la /var/cache/apt/archives/
         
