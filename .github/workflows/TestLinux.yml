@@ -25,6 +25,10 @@ jobs:
         #set -v
         echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
         sudo apt clean
+        sudo rm -r /var/cache/apt/archives/
+        mkdir -p cache/var/cache/apt/
+        ln -s /var/cache/apt/archives/ cache/var/cache/apt/archives
+        
         #apt-config dump
         #ls -la /var/cache/apt/
         #ls -la /var/cache/apt/archives/
@@ -34,9 +38,9 @@ jobs:
         sudo apt install -y locales-all
         ls -la /var/cache/apt/
         ls -la /var/cache/apt/archives/
-        sudo apt install -y git
-        ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
+        #sudo apt install -y git
+        #ls -la /var/cache/apt/
+        #ls -la /var/cache/apt/archives/
 
 
 
