@@ -27,7 +27,7 @@ jobs:
         sudo apt clean
         sudo rm -r /var/cache/apt/archives/
         mkdir -p cache/var/cache/apt/
-        sudo ln -s cache/var/cache/apt/archives /var/cache/apt/archives/
+        sudo ln -s cache/var/cache/apt/archives /var/cache/apt/archives
         
         #apt-config dump
         #ls -la /var/cache/apt/
