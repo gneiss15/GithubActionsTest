@@ -83,7 +83,7 @@ jobs:
       run: |
         set -x
         cd "$REPO_DIR"
-        git status --porcelain "$dir" | grep -qE "^[ MARCUD?!]{2}"
+        git status --porcelain "." | grep -qE "^[ MARCUD?!]{2}"
 
 
     #- name: Info2
