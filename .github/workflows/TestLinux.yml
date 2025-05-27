@@ -19,6 +19,7 @@ jobs:
     steps:
     - name: Setup
       run: |
+        set -x
         REPO_DIR="${GITHUB_REPO##*/}"
         echo -e "REPO_DIR=$REPO_DIR" >> $GITHUB_ENV
         APT_CACHE_DIR="$PWD/$REPO_DIR/cache/var/cache/apt"
@@ -27,6 +28,7 @@ jobs:
 
     - name: Show Env
       run: |
+        set -x
         echo "REPO_DIR: $REPO_DIR"
         echo "APT_CACHE_DIR: $APT_CACHE_DIR"
 
@@ -63,6 +65,7 @@ jobs:
 
     - name: apt update
       run: |
+        set -x
         sudo apt update
         ls -la /var/cache/apt/
         if [ -d /var/cache/apt/archives/ ]; then
@@ -78,6 +81,7 @@ jobs:
 
     - name: AnyChangesInDir
       run: |
+        set -x
         cd "$REPO_DIR"
         git status --porcelain "$dir" | grep -qE "^[ MARCUD?!]{2}"
 
