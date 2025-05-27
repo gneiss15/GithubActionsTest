@@ -50,3 +50,22 @@ jobs:
         sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
         sudo chmod a+r $APT_CACHE_DIR/archives/*
 
+    - name: AnyChangesInDir
+      run: |
+        set -x
+        sudo chmod a+r $APT_CACHE_DIR/archives/*
+        ls -la "$APT_CACHE_DIR/archives"
+        git config --global user.email "gneiss@eweb.de"
+        git config --global user.name "Günter Neiß"
+        git config --global user.username "gneiss15"
+        git config --global github.user "gneiss15"
+        git config --global github.token "$GITHUB_TOKEN"
+
+        cd "$REPO_DIR"
+        if ./AnyChangesInDir.sh; then
+          echo "Changes"
+          ./AddAllChangesInDir.sh
+         else
+          echo "No Changes"
+        fi
+
