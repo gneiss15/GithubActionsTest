@@ -5,6 +5,7 @@ permissions:
   actions: write
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_REPO: ${{ github.repository }}
 defaults:
   run:
     shell: bash
@@ -15,40 +16,51 @@ jobs:
     #permissions:
     #  actions: write
     steps:
+    - name: Info1
+      echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+      echo "PWD: $PWD"
+      echo "github.repository: $GITHUB_REPO"
+      ls -la
+      
     - name: Clone the repository
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-    - name: Mod Apt
-      run: |
-        echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
-    - name: TestLinux1
-      run: |
-        set -x
-        #set -v
-        echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
-        mkdir -p $PWD/cache/var/cache/apt
-        sudo mv /var/cache/apt/archives/ $PWD/cache/var/cache/apt
-        sudo ln -s $PWD/cache/var/cache/apt/archives/ /var/cache/apt/archives
-        ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
+        #path: '${{ github.head_ref }}'
 
-        sudo apt clean
-        ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
+    - name: Info2
+      ls -la
+
+    #- name: Mod Apt
+    #  run: |
+    #    echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
+    #- name: TestLinux1
+    #  run: |
+    #    set -x
+    #    #set -v
+    #    echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
+    #    mkdir -p $PWD/cache/var/cache/apt
+    #    sudo mv /var/cache/apt/archives/ $PWD/cache/var/cache/apt
+    #    sudo ln -s $PWD/cache/var/cache/apt/archives/ /var/cache/apt/archives
+    #    ls -la /var/cache/apt/
+    #    ls -la /var/cache/apt/archives/
+
+    #    sudo apt clean
+    #    ls -la /var/cache/apt/
+    #    ls -la /var/cache/apt/archives/
         
-        #apt-config dump
-        #ls -la /var/cache/apt/
-        #ls -la /var/cache/apt/archives/
-        sudo apt update
-        ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
-        sudo apt install -y locales-all
-        ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
-        #sudo apt install -y git
-        #ls -la /var/cache/apt/
-        #ls -la /var/cache/apt/archives/
+    #    #apt-config dump
+    #    #ls -la /var/cache/apt/
+    #    #ls -la /var/cache/apt/archives/
+    #    sudo apt update
+    #    ls -la /var/cache/apt/
+    #    ls -la /var/cache/apt/archives/
+    #    sudo apt install -y locales-all
+    #    ls -la /var/cache/apt/
+    #    ls -la /var/cache/apt/archives/
+    #    #sudo apt install -y git
+    #    #ls -la /var/cache/apt/
+    #    #ls -la /var/cache/apt/archives/
 
 
 
