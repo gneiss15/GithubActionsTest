@@ -60,7 +60,7 @@ jobs:
         ls -la /var/cache/apt/archives
         if [ -d /var/cache/apt/archives/ ]; then
           ls -la /var/cache/apt/archives/
-        fi"$APT_CACHE_DIR"
+        fi
         ls -la "$APT_CACHE_DIR"
         sudo chmod a+r $APT_CACHE_DIR/archives/*
 
