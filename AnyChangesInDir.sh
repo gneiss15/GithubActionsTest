@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#set -x
+set -x
+set -v
 
 # Funktion: AnyChangesInDir
 # Syntax: AnyChangesInDir [-o] [Dir]
