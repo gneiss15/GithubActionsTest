@@ -19,7 +19,7 @@ jobs:
     steps:
     - name: Setup
       run: |
-        set -x
+        set -x;
         REPO_DIR="${GITHUB_REPO##*/}"
         echo -e "REPO_DIR=$REPO_DIR" >> $GITHUB_ENV
         APT_CACHE_DIR="$PWD/$REPO_DIR/cache/var/cache/apt"
@@ -83,7 +83,12 @@ jobs:
       run: |
         set -x
         cd "$REPO_DIR"
-        git status --porcelain "." | grep -qE "^[ MARCUD?!]{2}"
+        if ./AnyChangesInDir.sh; then
+          echo "Changes"
+         else
+          echo "No Changes"
+        fi
+        #git status --porcelain "." | grep -qE "^[ MARCUD?!]{2}"
 
 
     #- name: Info2
