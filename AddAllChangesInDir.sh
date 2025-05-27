@@ -28,7 +28,7 @@ if [[ "$1" ]]; then
 fi
 
 # Wenn Änderungen vorhanden sind
-if AnyChangesInDir $($only_top_level && echo "-o") "$dir"; then
+if ./AnyChangesInDir.sh $($only_top_level && echo "-o") "$dir"; then
   git add "$dir"
   git commit -m "$msg"
   git push
