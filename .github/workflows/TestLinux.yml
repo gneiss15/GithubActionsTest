@@ -29,3 +29,9 @@ jobs:
         echo "REPO_DIR: $REPO_DIR"
         echo "APT_CACHE_DIR: $APT_CACHE_DIR"
 
+    - name: Clone the repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+        path: '${{ env.REPO_DIR }}'
+
