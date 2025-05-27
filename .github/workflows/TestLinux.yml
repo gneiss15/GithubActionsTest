@@ -67,10 +67,11 @@ jobs:
         git config --global github.token "$PAT"
 
         cd "$REPO_DIR"
-        if ./AnyChangesInDir.sh; then
-          echo "Changes"
-          ./AddAllChangesInDir.sh
-         else
-          echo "No Changes"
-        fi
+        ./AddAllChangesInDir.sh
+        #if ./AnyChangesInDir.sh; then
+        #  echo "Changes"
+        #  ./AddAllChangesInDir.sh
+        # else
+        #  echo "No Changes"
+        #fi
 

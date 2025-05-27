@@ -18,9 +18,6 @@ while [[ "$1" ]]; do
 done
 
 # Prüfe Änderungen im Verzeichnis
-#if [ -z "$(git status --porcelain "$dir")" ]; then
-#  exit 1
-#fi
 if $only_top_level; then
   git status --porcelain "$dir" | grep -qE "^[ MARCUD?\!]{2} $(basename "$dir")/"
  else
