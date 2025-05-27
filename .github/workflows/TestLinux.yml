@@ -60,8 +60,9 @@ jobs:
         ls -la /var/cache/apt/archives
         if [ -d /var/cache/apt/archives/ ]; then
           ls -la /var/cache/apt/archives/
-        fi
+        fi"$APT_CACHE_DIR"
         ls -la "$APT_CACHE_DIR"
+        sudo chmod a+r "$APT_CACHE_DIR/archives/*"
 
     - name: apt update
       run: |
@@ -82,6 +83,8 @@ jobs:
     - name: AnyChangesInDir
       run: |
         set -x
+        git config --global user.email "gneiss@eweb.de"
+        git config --global user.name "gneiss15"
         cd "$REPO_DIR"
         if ./AnyChangesInDir.sh; then
           echo "Changes"
