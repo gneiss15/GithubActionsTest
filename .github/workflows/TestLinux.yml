@@ -35,7 +35,10 @@ jobs:
         #set -x
         cd "$REPO_DIR"
         ./ModApt.sh
-
+        
+    - name: Make APT_CACHE_DIR readable
+      run: |
+        sudo chmod a+r $APT_CACHE_DIR/archives/*
     - name: Commit all changed files back to the repository
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
