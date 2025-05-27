@@ -17,16 +17,13 @@ jobs:
     #permissions:
     #  actions: write
     steps:
-    #- name: Info1
-    #  run: |
-    #    REPO=${GITHUB_REPO##*/}
-    #    echo "REPO=$REPO" >> $GITHUB_ENV
-    #    echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-    #    echo "PWD: $PWD"
-    #    echo "github.repository: $GITHUB_REPO"
-    #    echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
-    #    echo "REPO: $REPO"
-    #    ls -la
+    - name: Info1
+      run: |
+        echo "PWD: $PWD"
+        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        echo "github.repository: $GITHUB_REPO"
+        echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
+        declare -p
       
     - name: Set Env
       run: |
