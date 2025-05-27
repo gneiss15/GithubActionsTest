@@ -17,36 +17,55 @@ jobs:
     #permissions:
     #  actions: write
     steps:
-    - name: Info1
+    - name: Setup
       run: |
-        echo "PWD: $PWD"
-        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-        echo "github.repository: $GITHUB_REPO"
-        echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
-        declare -p
-      
-    - name: Set Env
-      run: |
-        echo "REPO=${GITHUB_REPO##*/}" >> $GITHUB_ENV
-        echo "REPO: $REPO"
+        REPO_DIR="${GITHUB_REPO##*/}"
+        echo -e "REPO_DIR=\"$REPO_DIR\"" >> $GITHUB_ENV
+        APT_CACHE_DIR="$PWD/$REPO_DIR/cache/var/cache/apt"
+        echo -e "APT_CACHE_DIR=\"$APT_CACHE_DIR\"" >> $GITHUB_ENV
+        #declare -p
 
     - name: Show Env
       run: |
-        echo "REPO: $REPO"
+        echo "REPO_DIR: $REPO_DIR"
+        echo "APT_CACHE_DIR: $APT_CACHE_DIR"
 
     - name: Clone the repository
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-        path: '${{ env.REPO }}'
+        path: '${{ env.REPO_DIR }}'
 
-    - name: Info2
+    - name: Mod Apt
       run: |
-        ls -la
+        echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
+        if [ ! -d "$APT_CACHE_DIR" ]; then
+          mkdir -p "$APT_CACHE_DIR"
+          sudo mv /var/cache/apt/archives/ "$APT_CACHE_DIR"
+         else
+          sudo rm -r /var/cache/apt/archives/
+        fi
+        sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
 
-    #- name: Mod Apt
+    - name: apt update
+      run: |
+        sudo apt update
+        #ls -la /var/cache/apt/
+        ls -la /var/cache/apt/archives/
+        sudo apt install -y locales-all
+        #ls -la /var/cache/apt/
+        ls -la /var/cache/apt/archives/
+
+    - name: AnyChangesInDir
+      run: |
+        cd "$REPO_DIR"
+        git status --porcelain "$dir" | grep -qE "^[ MARCUD?!]{2}"
+
+
+    #- name: Info2
     #  run: |
-    #    echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
+    #    ls -la
+
     #- name: TestLinux1
     #  run: |
     #    set -x
@@ -65,12 +84,6 @@ jobs:
     #    #apt-config dump
     #    #ls -la /var/cache/apt/
     #    #ls -la /var/cache/apt/archives/
-    #    sudo apt update
-    #    ls -la /var/cache/apt/
-    #    ls -la /var/cache/apt/archives/
-    #    sudo apt install -y locales-all
-    #    ls -la /var/cache/apt/
-    #    ls -la /var/cache/apt/archives/
     #    #sudo apt install -y git
     #    #ls -la /var/cache/apt/
     #    #ls -la /var/cache/apt/archives/
