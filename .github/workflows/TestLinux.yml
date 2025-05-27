@@ -35,3 +35,18 @@ jobs:
         ref: ${{ github.head_ref }}
         path: '${{ env.REPO_DIR }}'
 
+    - name: Mod Apt
+      run: |
+        #set -x
+        echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
+        if [ ! -d "$APT_CACHE_DIR" ]; then
+          echo "$APT_CACHE_DIR does not exist"
+          mkdir -p "$APT_CACHE_DIR"
+          sudo mv /var/cache/apt/archives/ "$APT_CACHE_DIR"
+         else
+          echo "$APT_CACHE_DIR exists"
+          sudo rm -r /var/cache/apt/archives/
+        fi
+        sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
+        sudo chmod a+r $APT_CACHE_DIR/archives/*
+
