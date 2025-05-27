@@ -85,10 +85,10 @@ jobs:
         cd "$REPO_DIR"
         if ./AnyChangesInDir.sh; then
           echo "Changes"
+          ./AddAllChangesInDir.sh
          else
           echo "No Changes"
         fi
-        #git status --porcelain "." | grep -qE "^[ MARCUD?!]{2}"
 
 
     #- name: Info2
