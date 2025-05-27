@@ -17,10 +17,11 @@ jobs:
     #  actions: write
     steps:
     - name: Info1
-      echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-      echo "PWD: $PWD"
-      echo "github.repository: $GITHUB_REPO"
-      ls -la
+      run: |
+        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        echo "PWD: $PWD"
+        echo "github.repository: $GITHUB_REPO"
+        ls -la
       
     - name: Clone the repository
       uses: actions/checkout@v4
@@ -29,7 +30,8 @@ jobs:
         #path: '${{ github.head_ref }}'
 
     - name: Info2
-      ls -la
+      run: |
+        ls -la
 
     #- name: Mod Apt
     #  run: |
