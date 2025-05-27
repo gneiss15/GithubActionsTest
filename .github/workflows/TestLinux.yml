@@ -37,7 +37,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-        path: '${{ env.REPO_DIR }}'
+        path: ${{ env.REPO_DIR }}
 
     - name: Mod Apt
       run: |
