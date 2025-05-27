@@ -20,9 +20,9 @@ jobs:
     - name: Setup
       run: |
         REPO_DIR="${GITHUB_REPO##*/}"
-        echo -e "REPO_DIR=\"$REPO_DIR\"" >> $GITHUB_ENV
+        echo -e "REPO_DIR=$REPO_DIR" >> $GITHUB_ENV
         APT_CACHE_DIR="$PWD/$REPO_DIR/cache/var/cache/apt"
-        echo -e "APT_CACHE_DIR=\"$APT_CACHE_DIR\"" >> $GITHUB_ENV
+        echo -e "APT_CACHE_DIR=$APT_CACHE_DIR" >> $GITHUB_ENV
         #declare -p
 
     - name: Show Env
@@ -56,16 +56,25 @@ jobs:
         sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
         ls -la /var/cache/apt/
         ls -la /var/cache/apt/archives
-        ls -la /var/cache/apt/archives/*
+        if [ -d /var/cache/apt/archives/ ]; then
+          ls -la /var/cache/apt/archives/
+        fi
+        ls -la "$APT_CACHE_DIR"
 
     - name: apt update
       run: |
         sudo apt update
-        #ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/*
+        ls -la /var/cache/apt/
+        if [ -d /var/cache/apt/archives/ ]; then
+          ls -la /var/cache/apt/archives/
+        fi
+        ls -la "$APT_CACHE_DIR"
         sudo apt install -y locales-all
-        #ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/*
+        ls -la /var/cache/apt/
+        if [ -d /var/cache/apt/archives/ ]; then
+          ls -la /var/cache/apt/archives/
+        fi
+        ls -la "$APT_CACHE_DIR"
 
     - name: AnyChangesInDir
       run: |
