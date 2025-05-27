@@ -29,7 +29,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-        #path: '${{ github.head_ref }}'
+        path: ${GITHUB_REPO##*/}
 
     - name: Info2
       run: |
