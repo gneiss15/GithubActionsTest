@@ -63,6 +63,7 @@ jobs:
         fi
         ls -la "$APT_CACHE_DIR"
         sudo chmod a+r $APT_CACHE_DIR/archives/*
+        ls -la "$APT_CACHE_DIR/archives"
 
     - name: apt update
       run: |
@@ -83,6 +84,8 @@ jobs:
     - name: AnyChangesInDir
       run: |
         set -x
+        sudo chmod a+r $APT_CACHE_DIR/archives/*
+        ls -la "$APT_CACHE_DIR/archives"
         git config --global user.email "gneiss@eweb.de"
         git config --global user.name "gneiss15"
         cd "$REPO_DIR"
