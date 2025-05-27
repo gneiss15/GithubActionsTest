@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
 permissions:
   actions: write
+  contents: write
 env:
   GITHUB_TOKEN: ${{ github.token }}
   GITHUB_REPO: ${{ github.repository }}
@@ -17,61 +18,61 @@ jobs:
     steps:
     - name: Setup
       run: |
-        set -x;
+        set -x
         REPO_DIR="${GITHUB_REPO##*/}"
         echo -e "REPO_DIR=$REPO_DIR" >> $GITHUB_ENV
         APT_CACHE_DIR="$PWD/$REPO_DIR/cache/var/cache/apt"
         echo -e "APT_CACHE_DIR=$APT_CACHE_DIR" >> $GITHUB_ENV
-        #declare -p
-
-    - name: Show Env
-      run: |
-        set -x
-        echo "REPO_DIR: $REPO_DIR"
-        echo "APT_CACHE_DIR: $APT_CACHE_DIR"
 
     - name: Clone the repository
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-        token: '${{ secrets.PAT }}' # must be a token with write access and expiration (otherwise pushing from workflow isn't possible)
         path: '${{ env.REPO_DIR }}'
 
     - name: Mod Apt
       run: |
         #set -x
-        echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
-        if [ ! -d "$APT_CACHE_DIR" ]; then
-          echo "$APT_CACHE_DIR does not exist"
-          mkdir -p "$APT_CACHE_DIR"
-          sudo mv /var/cache/apt/archives/ "$APT_CACHE_DIR"
-         else
-          echo "$APT_CACHE_DIR exists"
-          sudo rm -r /var/cache/apt/archives/
-        fi
-        sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
-        sudo chmod a+r $APT_CACHE_DIR/archives/*
-        
-        echo "x" >> "$APT_CACHE_DIR/../../../t.txt"
-
-    - name: AnyChangesInDir
-      run: |
-        set -x
-        sudo chmod a+r $APT_CACHE_DIR/archives/*
-        ls -la "$APT_CACHE_DIR/archives"
-        git config --global user.email "gneiss@eweb.de"
-        git config --global user.name "Günter Neiß"
-        git config --global user.username "gneiss15"
-        git config --global github.user "gneiss15"
-        #git config --global github.token "$GITHUB_TOKEN"
-        git config --global github.token "$PAT"
-
+        ./ModApt.sh
         cd "$REPO_DIR"
-        ./AddAllChangesInDir.sh
-        #if ./AnyChangesInDir.sh; then
-        #  echo "Changes"
-        #  ./AddAllChangesInDir.sh
-        # else
-        #  echo "No Changes"
-        #fi
+
+    - name: Commit all changed files back to the repository
+      uses: stefanzweifel/git-auto-commit-action@v5
+      commit_message: Auto-Commit
+      # Optional. Local file path to the repository.
+      # Defaults to the root of the repository.
+      repository: ${{ env.REPO_DIR }}'
+      # See https://git-scm.com/docs/git-commit#_options
+      #commit_options: '--no-verify --signoff'
+      # - https://git-scm.com/docs/git-add#Documentation/git-add.txt-ltpathspecgt82308203
+      # - https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpathspecapathspec
+      #file_pattern: '*.php src/*.js tests/*.js'
+      #commit_user_name: My GitHub Actions Bot # defaults to "github-actions[bot]"
+      #commit_user_email: my-github-actions-bot@example.org # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+      #commit_author: Author <actions@github.com> # defaults to "username <numeric_id+username@users.noreply.github.com>", where "numeric_id" and "username" belong to the author of the commit that triggered the run
+      # Optional. Tag name being created in the local repository and 
+      # pushed to remote repository and defined branch.
+      #tagging_message: 'v1.0.0'
+      # Optional. Option used by `git-status` to determine if the repository is 
+      # dirty. See https://git-scm.com/docs/git-status#_options
+      #status_options: '--untracked-files=no'
+      # See https://git-scm.com/docs/git-add#_options
+      #add_options: '-u'
+      # Optional. Options used by `git-push`.
+      # See https://git-scm.com/docs/git-push#_options
+      #push_options: '--force'
+      # Optional. Disable dirty check and always try to create a commit and push
+      #skip_dirty_check: true    
+      # Optional. Skip internal call to `git fetch`
+      #skip_fetch: true    
+      # Optional. Skip internal call to `git checkout`
+      #skip_checkout: true
+      # Optional. Prevents the shell from expanding filenames. 
+      # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
+      #disable_globbing: true
+      # Optional. Create given branch name in local and remote repository.
+      #create_branch: true
+      # Optional. Creates a new tag and pushes it to remote without creating a commit. 
+      # Skips dirty check and changed files. Must be used with `tagging_message`.
+      #create_git_tag_only: false      
 
