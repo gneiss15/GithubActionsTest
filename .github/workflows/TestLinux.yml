@@ -88,6 +88,7 @@ jobs:
         ls -la "$APT_CACHE_DIR/archives"
         git config --global user.email "gneiss@eweb.de"
         git config --global user.name "gneiss15"
+        git config --global github.token "$GITHUB_TOKEN"
         cd "$REPO_DIR"
         if ./AnyChangesInDir.sh; then
           echo "Changes"
@@ -97,7 +98,7 @@ jobs:
         fi
 
 
-    #- name: Info2
+    #- name: Info2 
     #  run: |
     #    ls -la
 
