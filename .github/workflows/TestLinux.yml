@@ -62,7 +62,7 @@ jobs:
           ls -la /var/cache/apt/archives/
         fi"$APT_CACHE_DIR"
         ls -la "$APT_CACHE_DIR"
-        sudo chmod a+r "$APT_CACHE_DIR/archives/*"
+        sudo chmod a+r $APT_CACHE_DIR/archives/*
 
     - name: apt update
       run: |
