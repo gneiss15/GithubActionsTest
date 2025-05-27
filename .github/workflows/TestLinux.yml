@@ -42,7 +42,7 @@ jobs:
         commit_message: Auto-Commit
         # Optional. Local file path to the repository.
         # Defaults to the root of the repository.
-        repository: ${{ env.REPO_DIR }}'
+        repository: ${{ env.REPO_DIR }}
         # See https://git-scm.com/docs/git-commit#_options
         #commit_options: '--no-verify --signoff'
         # - https://git-scm.com/docs/git-add#Documentation/git-add.txt-ltpathspecgt82308203
