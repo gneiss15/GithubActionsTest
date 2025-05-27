@@ -56,16 +56,16 @@ jobs:
         sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
         ls -la /var/cache/apt/
         ls -la /var/cache/apt/archives
-        ls -la /var/cache/apt/archives/
+        ls -la /var/cache/apt/archives/*
 
     - name: apt update
       run: |
         sudo apt update
         #ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
+        ls -la /var/cache/apt/archives/*
         sudo apt install -y locales-all
         #ls -la /var/cache/apt/
-        ls -la /var/cache/apt/archives/
+        ls -la /var/cache/apt/archives/*
 
     - name: AnyChangesInDir
       run: |
