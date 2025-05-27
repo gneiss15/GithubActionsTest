@@ -7,6 +7,7 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
   GITHUB_REPO: ${{ github.repository }}
   GITHUB_HEAD_REF: ${{ github.head_ref }}
+  PAT: ${{ secrets.PAT }}
 defaults:
   run:
     shell: bash
@@ -33,6 +34,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
+        token: '${{ secrets.PAT }}' # must be a token with write access and expiration (otherwise pushing from workflow isn't possible)
         path: '${{ env.REPO_DIR }}'
 
     - name: Mod Apt
@@ -59,7 +61,8 @@ jobs:
         git config --global user.name "Günter Neiß"
         git config --global user.username "gneiss15"
         git config --global github.user "gneiss15"
-        git config --global github.token "$GITHUB_TOKEN"
+        #git config --global github.token "$GITHUB_TOKEN"
+        git config --global github.token "$PAT"
 
         cd "$REPO_DIR"
         if ./AnyChangesInDir.sh; then
