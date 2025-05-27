@@ -51,6 +51,8 @@ jobs:
         fi
         sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
         sudo chmod a+r $APT_CACHE_DIR/archives/*
+        
+        echo "x" >> "$APT_CACHE_DIR/../../../t.txt"
 
     - name: AnyChangesInDir
       run: |
