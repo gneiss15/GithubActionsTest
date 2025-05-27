@@ -4,7 +4,8 @@ on:
 permissions:
   actions: write
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ github.token }}
   GITHUB_REPO: ${{ github.repository }}
   GITHUB_HEAD_REF: ${{ github.head_ref }}
 defaults:
@@ -65,21 +66,21 @@ jobs:
         sudo chmod a+r $APT_CACHE_DIR/archives/*
         ls -la "$APT_CACHE_DIR/archives"
 
-    - name: apt update
-      run: |
+    #- name: apt update
+    #  run: |
         set -x
-        sudo apt update
-        ls -la /var/cache/apt/
-        if [ -d /var/cache/apt/archives/ ]; then
-          ls -la /var/cache/apt/archives/
-        fi
-        ls -la "$APT_CACHE_DIR"
-        sudo apt install -y locales-all
-        ls -la /var/cache/apt/
-        if [ -d /var/cache/apt/archives/ ]; then
-          ls -la /var/cache/apt/archives/
-        fi
-        ls -la "$APT_CACHE_DIR"
+        #sudo apt update
+        #ls -la /var/cache/apt/
+        #if [ -d /var/cache/apt/archives/ ]; then
+        #  ls -la /var/cache/apt/archives/
+        #fi
+        #ls -la "$APT_CACHE_DIR"
+        #sudo apt install -y locales-all
+        #ls -la /var/cache/apt/
+        #if [ -d /var/cache/apt/archives/ ]; then
+        #  ls -la /var/cache/apt/archives/
+        #fi
+        #ls -la "$APT_CACHE_DIR"
 
     - name: AnyChangesInDir
       run: |
@@ -87,8 +88,11 @@ jobs:
         sudo chmod a+r $APT_CACHE_DIR/archives/*
         ls -la "$APT_CACHE_DIR/archives"
         git config --global user.email "gneiss@eweb.de"
-        git config --global user.name "gneiss15"
+        git config --global user.name "Günter Neiß"
+        git config --global user.username "gneiss15"
+        git config --global github.user "gneiss15"
         git config --global github.token "$GITHUB_TOKEN"
+
         cd "$REPO_DIR"
         if ./AnyChangesInDir.sh; then
           echo "Changes"
