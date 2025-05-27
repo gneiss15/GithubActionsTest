@@ -38,14 +38,25 @@ jobs:
 
     - name: Mod Apt
       run: |
+        set -x
         echo -e "Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n" | sudo tee /etc/apt/apt.conf.d/99x-my
+        
+        ls -la /var/cache/apt/
+
         if [ ! -d "$APT_CACHE_DIR" ]; then
+          echo "$APT_CACHE_DIR does not exist"
           mkdir -p "$APT_CACHE_DIR"
           sudo mv /var/cache/apt/archives/ "$APT_CACHE_DIR"
          else
+          echo "$APT_CACHE_DIR exists"
           sudo rm -r /var/cache/apt/archives/
         fi
+        ls -la "$APT_CACHE_DIR"
+        ls -la /var/cache/apt/
         sudo ln -s "$APT_CACHE_DIR/archives/" /var/cache/apt/archives
+        ls -la /var/cache/apt/
+        ls -la /var/cache/apt/archives
+        ls -la /var/cache/apt/archives/
 
     - name: apt update
       run: |
