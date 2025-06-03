@@ -17,11 +17,19 @@ jobs:
         set -x
         THIS_REPO_DIR=${GITHUB_REPOSITORY##*/}
         APT_CACHE_DIR=${THIS_REPO_DIR}/cache/var/cache/apt
-        TOOLS_DIR=${GITHUB_WORKSPACE}/.github/scripts
+        TOOLS_DIR=${THIS_REPO_DIR}/.github/scripts
         
         for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
           eval "r=\"\$$i\""
           echo "$i=$r" >> $GITHUB_ENV
+        done
+
+    - name: Show
+      run: |
+        set -x
+        for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
+          eval "r=\"\$$i\""
+          echo "$i=$r"
         done
 
     - name: Clone the repository
