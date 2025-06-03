@@ -15,7 +15,7 @@ jobs:
     - name: Setup
       run: |
         set -x
-        THIS_REPO_DIR=${GITHUB_REPOSITORY##*/}
+        THIS_REPO_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY##*/}
         APT_CACHE_DIR=${THIS_REPO_DIR}/cache/var/cache/apt
         TOOLS_DIR=${THIS_REPO_DIR}/.github/scripts
         
@@ -31,6 +31,10 @@ jobs:
           eval "r=\"\$$i\""
           echo "$i=$r"
         done
+        ls -la $TOOLS_DIR
+        cd "$REPO_DIR"
+        ls -la
+        pwd
 
     - name: Clone the repository
       uses: actions/checkout@v4
@@ -47,4 +51,4 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: Auto-Commit
-        repository: ${{ env.REPO_DIR }}
+        repository: ${{ env.THIS_REPO_DIR }}
