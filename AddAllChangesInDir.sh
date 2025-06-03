@@ -7,24 +7,20 @@ set -v
 # Syntax: AnyChangesInDir [-o] [Dir]
 AnyChangesInDir()
  {
-  local only_top_level=false
+  local only_top_level=""
   local dir="."
 
   # Argumente verarbeiten
   while [[ "$1" ]]; do
     case "$1" in
-      -o) only_top_level=true ;;
+      -o) only_top_level=" $(basename "$dir")/" ;;
       *) dir="$1" ;;
     esac
     shift
   done
 
   # Prüfe Änderungen im Verzeichnis
-  if $only_top_level; then
-    git status --porcelain "$dir" | grep -qE "^[ MARCUD?\!]{2} $(basename "$dir")/"
-   else
-    git status --porcelain "$dir" | grep -qE "^[ MARCUD?\!]{2}"
-  fi
+  git status --porcelain "$dir" | grep -qE "^[ MARCUD?\!]{2}$only_top_level"
  }
 
 # Funktion: AddAllChangesInDir
@@ -56,10 +52,17 @@ AddAllChangesInDir()
 
   # Wenn Änderungen vorhanden sind
   if AnyChangesInDir $only_top_level "$dir"; then
-    git add "$dir"
+    if [ -n "$only_top_level" ]; then
+      find "$dir" -maxdepth 1 -type f -exec git add {} +
+     else
+      git add "$dir"
+    fi
     git commit -m "$msg"
     git push
   fi
+
+
  }
 
 AddAllChangesInDir "$@"
+

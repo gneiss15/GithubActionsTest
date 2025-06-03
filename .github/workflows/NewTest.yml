@@ -1,0 +1,23 @@
+name: TestLinux
+on:
+  workflow_dispatch:
+  push:
+permissions:
+  actions: write
+  contents: write
+env:
+  GITHUB_REPO: ${{ github.repository }}
+defaults:
+  run:
+    shell: bash
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test1
+      run: |
+        set -x
+        echo "github.repository: ${{ github.repository }}"
+        echo 'github.repository: ${{ github.repository }}'
+        echo "GITHUB_REPO: ${GITHUB_REPO}"
+

@@ -125,6 +125,17 @@ jobs:
     #    #ls -la /var/cache/apt/
     #    #ls -la /var/cache/apt/archives/
 
+    #- name: Get all release tags >= 2.9 from prusa3d/PrusaSlicer
+    #  id: get_release
+    #  run: |
+    #    list=$(gh release list -R prusa3d/PrusaSlicer --json tagName | jq -r 'map(select(true))[] | (.tagName)' | sed s/version_//g)
+    #    tmpfile=mktemp
+    #    rm -f $tmpfile
+    #    for i in $list; do
+    #      if [[ $i != *-* ]] && dpkg --compare-versions $i "ge" "2.9"; then
+    #        echo $i >>$tmpfile
+    #      fi
+    #    done
 
 
     #- name: Get latest release tag from prusa3d/PrusaSlicer
