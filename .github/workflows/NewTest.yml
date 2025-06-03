@@ -12,13 +12,13 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-    - name: Setup
+    - name: Setup Env
       run: |
         set -x
         THIS_REPO_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY##*/}
         APT_CACHE_DIR=${THIS_REPO_DIR}/cache/var/cache/apt
         TOOLS_DIR=${THIS_REPO_DIR}/.github/scripts
-        
+
         for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
           eval "r=\"\$$i\""
           echo "$i=$r" >> $GITHUB_ENV
@@ -40,3 +40,21 @@ jobs:
       with:
         commit_message: Auto-Commit
         repository: ${{ env.THIS_REPO_DIR }}
+
+    - name: Check Releases
+      id: Check_Releases
+      run: |
+        cd "$GITHUB_WORKSPACE"
+        $TOOLS_DIR/CheckReleases.sh
+        if [ "$NEW_RELEASE" == "false" ]; then
+          echo "No new release found. Exiting."
+          exit 0  # Exit the job gracefully if no new release
+        fi
+
+    - name: Exit if no new release
+      run: |
+        if [ -z "$NEW_RELEASE" ]; then
+          echo "No new release found. Exiting."
+          exit 0  # Exit the job gracefully if no new release
+        fi
+
