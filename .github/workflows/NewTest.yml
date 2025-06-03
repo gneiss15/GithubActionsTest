@@ -8,6 +8,8 @@ permissions:
 defaults:
   run:
     shell: bash
+env:
+  GH_TOKEN: ${{ github.token }}
 jobs:
   linux:
     runs-on: ubuntu-latest

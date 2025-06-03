@@ -19,6 +19,6 @@ GetReleases()
  
 GetReleases "prusa3d/PrusaSlicer" "./PrusaSlicer.Releases"
 GetReleases "gneiss15/GithubActionsTest" "./GithubActionsTest.Releases"
-export newReleases=$(comm -23 PrusaSlicer.Releases GithubActionsTest.Releases)
+export newReleases="$(comm -23 PrusaSlicer.Releases GithubActionsTest.Releases)"
 rm -f "./PrusaSlicer.Releases" "./GithubActionsTest.Releases"
 
