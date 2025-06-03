@@ -15,14 +15,16 @@ jobs:
     - name: Setup
       run: |
         set -x
-        GITHUB_REPO="${{ github.repository }}"
-        echo -e "REPO_DIR=${GITHUB_REPO##*/}" >> $GITHUB_ENV
-        echo -e 'REPO_DIR2=${${{ github.repository }}##*/}' >> $GITHUB_ENV
+        echo -e "THIS_REPO_DIR=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+        echo -e "TOOLS=${GITHUB_WORKSPACE}/.github/scripts" >> $GITHUB_ENV
 
     - name: Show
       run: |
-        echo REPO_DIR: $REPO_DIR
-        echo REPO_DIR2: $REPO_DIR2
-        
-
+        set -x
+        echo "THIS_REPO_DIR: $THIS_REPO_DIR"
+        echo "PWD: $PWD"
+        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        echo "TOOLS: $GITHUB_WORKSPACE/.github/scripts"
+        echo ": $"
+        echo ": $"
 
