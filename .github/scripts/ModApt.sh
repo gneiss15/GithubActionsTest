@@ -18,4 +18,4 @@ sudo apt update
 sudo apt install -y locales-all
 
 
-sudo rm -rf $APT_CACHE_DIR/archives/*
+sudo rm -rf $APT_CACHE_DIR/archives/partial/
