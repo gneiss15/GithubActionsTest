@@ -17,12 +17,12 @@ jobs:
         set -x
         GITHUB_REPO="${{ github.repository }}"
         echo -e "REPO_DIR=${GITHUB_REPO##*/}" >> $GITHUB_ENV
-        echo -e "REPO_DIR2=${${{ github.repository }}##*/}" >> $GITHUB_ENV
+        echo -e 'REPO_DIR2=${${{ github.repository }}##*/}' >> $GITHUB_ENV
 
     - name: Show
       run: |
-        echo GITHUB_REPO: $GITHUB_REPO
-        echo GITHUB_REPO2: $GITHUB_REPO2
+        echo REPO_DIR: $REPO_DIR
+        echo REPO_DIR2: $REPO_DIR2
         
 
 
