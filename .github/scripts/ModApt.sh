@@ -19,3 +19,5 @@ sudo apt install -y locales-all
 
 
 sudo rm -rf $APT_CACHE_DIR/archives/partial/
+sudo rm -rf $APT_CACHE_DIR/archives/lock
+
