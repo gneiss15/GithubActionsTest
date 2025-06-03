@@ -33,7 +33,7 @@ jobs:
     - name: Mod Apt
       run: |
         cd "$REPO_DIR"
-        $TOOLS/ModApt.sh
+        $TOOLS_DIR/ModApt.sh
 
     - name: Commit all changed files back to the repository
       uses: stefanzweifel/git-auto-commit-action@v5
