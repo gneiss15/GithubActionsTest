@@ -24,23 +24,27 @@ jobs:
           echo "$i=$r" >> $GITHUB_ENV
         done
 
-    - name: Show
+    - name: Show1
       run: |
         set -x
         for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
           eval "r=\"\$$i\""
           echo "$i=$r"
         done
-        ls -la $TOOLS_DIR
-        cd "$REPO_DIR"
-        ls -la
-        pwd
 
     - name: Clone the repository
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
         path: '${{ env.THIS_REPO_DIR }}'
+
+    - name: Show2
+      run: |
+        set -x
+        ls -la $TOOLS_DIR
+        cd "$REPO_DIR"
+        ls -la
+        pwd
 
     - name: Mod Apt
       run: |
