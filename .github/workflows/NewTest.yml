@@ -24,21 +24,19 @@ jobs:
           echo "$i=$r" >> $GITHUB_ENV
         done
 
-    - name: Show
+    - name: Clone the repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+        path: '${{ env.THIS_REPO_DIR }}'
+
+    - name: Mod Apt
       run: |
-        set -x
-        for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
-          eval "r=\"\$$i\""
-          echo "$i: $r"
-        done
+        cd "$REPO_DIR"
+        $TOOLS/ModApt.sh
 
-    #- name: Clone the repository
-    #  uses: actions/checkout@v4
-    #  with:
-    #    ref: ${{ github.head_ref }}
-    #    path: '${{ env.THIS_REPO_DIR }}'
-
-    #- name: Mod Apt
-    #  run: |
-    #    cd "$REPO_DIR"
-    #    $TOOLS/ModApt.sh
+    - name: Commit all changed files back to the repository
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: Auto-Commit
+        repository: ${{ env.REPO_DIR }}
