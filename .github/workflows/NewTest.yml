@@ -1,4 +1,4 @@
-name: TestLinux
+name: Test
 on:
   workflow_dispatch:
   push:
@@ -15,16 +15,30 @@ jobs:
     - name: Setup
       run: |
         set -x
-        echo -e "THIS_REPO_DIR=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
-        echo -e "TOOLS=${GITHUB_WORKSPACE}/.github/scripts" >> $GITHUB_ENV
+        THIS_REPO_DIR=${GITHUB_REPOSITORY##*/}
+        APT_CACHE_DIR=${THIS_REPO_DIR}/cache/var/cache/apt
+        TOOLS_DIR=${GITHUB_WORKSPACE}/.github/scripts
+        
+        for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
+          eval "r=\"\$$i\""
+          echo "$i=$r" >> $GITHUB_ENV
+        done
 
     - name: Show
       run: |
         set -x
-        echo "THIS_REPO_DIR: $THIS_REPO_DIR"
-        echo "PWD: $PWD"
-        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-        echo "TOOLS: $GITHUB_WORKSPACE/.github/scripts"
-        echo ": $"
-        echo ": $"
+        for i in THIS_REPO_DIR APT_CACHE_DIR TOOLS_DIR; do
+          eval "r=\"\$$i\""
+          echo "$i: $r"
+        done
 
+    #- name: Clone the repository
+    #  uses: actions/checkout@v4
+    #  with:
+    #    ref: ${{ github.head_ref }}
+    #    path: '${{ env.THIS_REPO_DIR }}'
+
+    #- name: Mod Apt
+    #  run: |
+    #    cd "$REPO_DIR"
+    #    $TOOLS/ModApt.sh
