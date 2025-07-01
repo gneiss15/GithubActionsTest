@@ -48,14 +48,14 @@ jobs:
       run: |
         cd "$GITHUB_WORKSPACE"
         $TOOLS_DIR/CheckReleases.sh
-        if [ "$NEW_RELEASE" == "false" ]; then
+        if [[ "$NEW_RELEASE" == "false" ]]; then
           echo "No new release found. Exiting."
           exit 0  # Exit the job gracefully if no new release
         fi
 
     - name: Exit if no new release
       run: |
-        if [ -z "$NEW_RELEASE" ]; then
+        if [[ -z "$NEW_RELEASE" ]]; then
           echo "No new release found. Exiting."
           exit 0  # Exit the job gracefully if no new release
         fi
